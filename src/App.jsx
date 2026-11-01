@@ -222,7 +222,7 @@ export default function App() {
               </textPath>
             </text>
           </svg>
-          <Reveal delay={0.2} style={box(185, 22, 170, 180)}><Img src={Maskot} label="maskot" fit="contain" round={0} style={{ width: "100%", height: "100%" }} /></Reveal>
+          <Reveal delay={0.2} style={box(185, 22, 160, 185)}><Img src={Maskot} label="maskot" fit="contain" round={0} style={{ width: "100%", height: "100%" }} /></Reveal>
           <Reveal delay={0.1} style={{ position: "absolute", left: 0, right: 0, top: u(208) }}>
             <h1 className="text-center" style={{ ...lilita, ...inner, color: C.yellow, fontSize: u(22), lineHeight: 1.2 }}>Welcome to my portfolio!</h1>
           </Reveal>
@@ -301,7 +301,7 @@ export default function App() {
             </Reveal>
           ))}
           <Reveal style={box(219.5, 82, 95, 25)} delay={0.2}>
-            <a href="https://wa.me/628573318656" target="_blank" rel="noreferrer" className="flex h-full w-full items-center justify-center transition hover:scale-105"
+            <a href="https://wa.me/6285733197939" target="_blank" rel="noreferrer" className="flex h-full w-full items-center justify-center transition hover:scale-105"
               style={{ ...arial, background: "#8AFC9D", color: "#1EAA35", borderRadius: u(8), fontSize: u(9.5), gap: u(4) }}>
               <span style={{ width: u(14), height: u(14) }}>{WA}</span>Contact me!
             </a>
@@ -314,7 +314,7 @@ export default function App() {
           <div className="relative h-full w-full border border-slate-600/70" style={{ borderRadius: u(14), ...arial, color: C.teal }}>
             <Img src={Logo} label="logo blooamarine" fit="contain" style={{ ...box(25, 10, 110, 40), objectPosition: "center", transform: "scale(2.5)", transformOrigin: "center" }} round={0} />
             <span className="absolute" style={{ left: u(80), top: u(50), transform: "translateX(-60%)", fontSize: u(10) }}>©2026</span>
-            {[["Pages", 394, [["Home", "home"], ["About", "about"], ["Portfolio", "portfolio"]]], ["Contact", 458, [["Whatsapp", null, "https://wa.me/628573318656"]]]].map(([t, cx, links]) => (
+            {[["Pages", 394, [["Home", "home"], ["About", "about"], ["Portfolio", "portfolio"]]], ["Contact", 458, [["Whatsapp", null, "https://wa.me/6285733197939"]]]].map(([t, cx, links]) => (
               <div key={t} className="absolute flex flex-col items-center" style={{ left: u(cx), top: u(9), transform: "translateX(-50%)", gap: u(2.5) }}>
                 <span style={{ fontSize: u(11), marginBottom: u(3) }}>{t}</span>
                 {links.map(([l, id, href]) => href ? (
