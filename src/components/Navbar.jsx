@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { siteData } from '../config/siteData';
 import { BubbleLogo } from './Doodles';
-import { ImagePlaceholder } from './ImagePlaceholder';
+
 
 export const Navbar = ({ activeSection, setActiveSection }) => {
   const [useCustomPlaceholder, setUseCustomPlaceholder] = useState(false);

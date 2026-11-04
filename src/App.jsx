@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import Bintang from "../public/images/bintang.PNG";
+import { useNavigate, useLocation } from "react-router-dom";
+import Bintang from "../public/images/aksen/bintang.PNG";
 import Maskot from "../public/images/bloo.png";
 import Profile from "../public/images/hani.jpg";
-import Kerang from "../public/images/kerang.PNG";
+import Kerang from "../public/images/aksen/kerang.PNG";
 import Logo from "../public/images/logo.PNG";
-import Illustration from "../public/images/biggle.jpg";
-import Game from "../public/images/witch.png";
-import Merchandise from "../public/images/totebag.png";
-import Kerangbg from "../public/images/kerang-bg.png";
-import Bintangbg from "../public/images/bintang-bg.png";
-import Spiralbg from "../public/images/spiral-bg.png";
+import Illustration from "../public/images/porto/biggle.jpg";
+import Game from "../public/images/porto/witch.png";
+import Merchandise from "../public/images/porto/totebag.png";
+import Kerangbg from "../public/images/aksen/kerang-bg.png";
+import Bintangbg from "../public/images/aksen/bintang-bg.png";
+import Spiralbg from "../public/images/aksen/spiral-bg.png";
 
 /* ============================================================
    blooamarine portfolio — React + Tailwind (satu file)
@@ -82,7 +83,9 @@ const PI = <svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full
 const WA = <svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" /></svg>;
 
 const WORKS = [
-  ["Illustration & Mascot Design", 66, 131, Illustration], ["2D Game Asset & Concept Art", 206, 129, Game], ["Merchandise", 345, 130, Merchandise],
+  ["Illustration & Mascot Design", 66, 131, Illustration, "/illustration"],
+  ["2D Game Asset & Concept Art", 206, 129, Game, null],
+  ["Merchandise", 345, 130, Merchandise, null],
 ];
 
 // gelombang sinus kontinu: tidak ada bagian lurus, ujung kiri/kanan juga tetap meliuk
@@ -104,11 +107,13 @@ const Page = ({ children, h, className = "", style }) => (
 // setiap container fade in (naik sedikit) tiap kali masuk layar saat di-scroll, berulang
 const Reveal = ({ children, style, className = "", delay = 0 }) => {
   const ref = useRef(null);
-  const [on, setOn] = useState(false);
+  const [on, setOn] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return setOn(true);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const io = new IntersectionObserver(([e]) => setOn(e.isIntersecting), { threshold: 0.1 });
-    io.observe(ref.current);
+    if (ref.current) io.observe(ref.current);
     return () => io.disconnect();
   }, []);
   return (
@@ -121,6 +126,17 @@ const Reveal = ({ children, style, className = "", delay = 0 }) => {
 
 export default function App() {
   const [active, setActive] = useState("home");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const el = document.getElementById(location.state.scrollTo);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 100);
+      }
+    }
+  }, [location]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -265,13 +281,18 @@ export default function App() {
               <span style={{ ...inner, display: "inline-block" }}>Let's explore my works!</span>
             </h2>
           </Reveal>
-          {WORKS.map(([title, top, h, img], i) => (
+          {WORKS.map(([title, top, h, img, path]) => (
             <Reveal key={title} style={box(76, top, 390, h)} delay={0.05}>
             <article className="relative h-full w-full" style={{ background: C.yellow, borderRadius: u(28), boxShadow: `0 0 ${u(8)} rgba(255,246,189,.85)` }}>
               <Img src={img} label={title} style={box(20, 20, 185, 94)} round={u(14)} />
               <div className="absolute flex flex-col justify-center" style={{ left: u(222), top: 0, height: "100%", width: u(160), gap: u(7) }}>
                 <h3 style={{ ...lilita, ...inner, color: C.cyan, fontSize: u(15), lineHeight: 1.2 }}>{title}</h3>
-                <button className="grid place-items-center rounded-full bg-[#01B8DA]/50 text-white transition-colors duration-300 hover:bg-[#01B8DA]"
+                <button
+                  type="button"
+                  onClick={() => path && navigate(path)}
+                  className={`grid place-items-center rounded-full text-white transition-colors duration-300 ${
+                    path ? "bg-[#01B8DA] hover:bg-[#047F96] cursor-pointer" : "bg-[#01B8DA]/50 cursor-default"
+                  }`}
                   style={{ ...lilita, width: u(63), height: u(16), fontSize: u(8) }}>
                   See more
                 </button>
