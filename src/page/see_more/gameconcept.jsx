@@ -1,25 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logo from "../public/images/logo.PNG";
-import Kerang from "../public/images/aksen/kerang.PNG";
-import Bintang from "../public/images/aksen/bintang.PNG";
-import Spirall from "../public/images/aksen/spirall.PNG";
+import Logo from "../../../public/images/logo.PNG";
+import Kerang from "../../../public/images/aksen/kerang.PNG";
+import Bintang from "../../../public/images/aksen/bintang.PNG";
+import Spirall from "../../../public/images/aksen/spirall.PNG";
 
-/* ============================================================
-   blooamarine — halaman 2: Illustration (See more)
-   Posisi & ukuran diukur dari desain lebar 314px, lalu dikonversi
-   ke satuan --u (534px) yang sama dengan halaman utama (x 1,7).
-   ============================================================ */
-import Biggle1 from "../public/images/illus/biggle-sketch.png";
-import Biggle2 from "../public/images/illus/biggle.jpg";
-import Ichiban from "../public/images/illus/ichiban-sketch.png";
-import Ichiban2 from "../public/images/illus/ichiban.jpg";
-import Book1 from "../public/images/illus/book-1.png";
-import Book2 from "../public/images/illus/book-2.png";
-import Tuno1 from "../public/images/illus/tuno-1.png";
-import TunoAll from "../public/images/illus/tuno-all.png";
-import TunaSiluet from "../public/images/illus/tuno-siluet.png";
-import Sun from "../public/images/illus/here-comes-the-sun.png";
+import Char from "../../../public/images/gameasset/char.png";
+import CrystalSketch from "../../../public/images/gameasset/crystal-sketch.PNG";
+import Crystal from "../../../public/images/gameasset/crystal-trap.png";
+import Doll from "../../../public/images/gameasset/doll.png";
+import Phoenix from "../../../public/images/gameasset/phoenix-trap.png";
+import TeapotSketch from "../../../public/images/gameasset/teapot-sketch.PNG";
+import Teapot from "../../../public/images/gameasset/teapot-trap.png";
+import TrapSketch from "../../../public/images/gameasset/trap-kamera-sketch.png";
+import Trap from "../../../public/images/gameasset/trap-kamera.png";
+import witchSketch from "../../../public/images/gameasset/witch-sketch.png";
+import witch from "../../../public/images/gameasset/witch.png";
 
 const C = { sky: "#FFFFFF", cyan: "#01B8DA", teal: "#047F96", pale: "#CCF5FF" };
 const u = (n) => `calc(var(--u) * ${n})`;
@@ -58,11 +54,11 @@ const Reveal = ({ children, style, className = "", delay = 0 }) => {
   );
 };
 
-/* ---- helper posisi absolut (koordinat desain x 1,7) ---- */
+/* ---- helper posisi absolut (koordinat desain x 1,34) ---- */
 const at = (x, y, w, h) => ({ position: "absolute", left: u(x), top: u(y), width: u(w), ...(h ? { height: u(h) } : {}) });
 
 // gambar dengan kotak tetap seperti di desain
-const Pic = ({ src, label, x, y, w, h, round = 4, fit = "cover", delay = 0 }) => (
+const Pic = ({ src, label, x, y, w, h, round = 0, fit = "contain", delay = 0 }) => (
   <Reveal delay={delay} style={at(x, y, w, h)}>
     <Img src={src} label={label} round={u(round)} style={{ height: "100%", objectFit: fit }} />
   </Reveal>
@@ -87,7 +83,7 @@ const DECO = [
   [Spirall, 153, 119.9, 32], [Spirall, 368.2, 119.9, 32],
 ];
 
-export default function IllustrationPage() {
+export default function GameAssetPage() {
   const navigate = useNavigate();
   const onBack = () => navigate("/", { state: { scrollTo: "portfolio" } });
   const onNav = (id) => navigate("/", { state: { scrollTo: id } });
@@ -146,28 +142,39 @@ export default function IllustrationPage() {
       </header>
       <div style={{ height: "var(--hh)" }} />
 
-      {/* ============ ISI HALAMAN (tinggi total desain 2420) ============ */}
-      <main className="relative" style={{ height: u(2420) }}>
+      {/* ============ ISI HALAMAN (tinggi total desain 1716) ============ */}
+      <main className="relative" style={{ height: u(1732) }}>
         {/* pagar selebar layar */}
-        <Bar y={543} h={36} dir="left" />
-        <Bar y={959} h={34} dir="right" />
-        <Bar y={1422} h={34} dir="left" />
-        <Bar y={1945} h={36} dir="right" />
+        <Bar y={960} h={35} dir="left" />
+        <Bar y={1314} h={35} dir="right" />
 
         <div className="relative mx-auto" style={{ width: u(534), height: "100%" }}>
           {/* tombol back */}
-          <button
-            type="button"
-            onClick={onBack}
-            className="absolute flex items-center justify-center rounded-full bg-[#01B8DA]/50 text-white transition-colors duration-300 hover:bg-[#01B8DA]"
-            style={{ ...lilita, zIndex: 1, pointerEvents: "auto", cursor: "pointer", left: u(-30), top: u(14), width: u(61), height: u(16), fontSize: u(8.5), gap: u(3) }}
-          >
+          <button type="button"
+          onClick={onBack}
+          className="flex items-center justify-center rounded-full bg-[#01B8DA]/50 text-white transition-colors duration-300 hover:bg-[#01B8DA]"
+          style={{
+            ...lilita,
+            position: "fixed",
+            zIndex: 50,
+            pointerEvents: "auto",
+            cursor: "pointer",
+            top: `calc(var(--hh) + ${u(14)})`,
+            left: `calc((var(--vw, 100vw) - ${u(534)}) / 2 + ${u(-30)})`,
+            width: u(61),
+            height: u(16),
+            fontSize: u(8.5),
+            gap: u(3),
+            }}
+        >
             <span aria-hidden>←</span> Back
-          </button>
+        </button>
 
           {/* judul */}
-          <Reveal style={{ position: "absolute", left: 0, right: 0, top: u(72) }}>
-            <h1 className="text-center" style={{ ...lilita, ...inner, color: C.cyan, fontSize: u(25.5), lineHeight: 1.2 }}>Illustration</h1>
+          <Reveal style={{ position: "absolute", left: 0, right: 0, top: u(60) }}>
+            <h1 className="text-center" style={{ ...lilita, ...inner, color: C.cyan, fontSize: u(25.5), lineHeight: 1.2 }}>
+              2D Game Asset &amp;<br />Concept Art
+            </h1>
           </Reveal>
 
           {/* hiasan bintang laut & kerang */}
@@ -176,45 +183,34 @@ export default function IllustrationPage() {
               style={{ left: u(cx - s / 2), top: u(cy - s / 2), width: u(s), height: u(s), objectFit: "contain", animationDelay: `${i * 0.4}s` }} />
           ))}
 
-          {/* 1. Biggle.3 poster: dua gambar bersebelahan */}
-          <Pic src={Biggle1} label="Biggle sketsa" x={76.5} y={202} w={184.5} h={255} round={3} />
-          <Pic src={Biggle2} label="Biggle poster" x={267.8} y={202} w={182} h={255} round={3} delay={0.1} />
-          <Cap y={485} w={374}>A poster illustration I created for the Biggle.3 Art Poster Competition with the theme “Daylight Dream.”</Cap>
+          {/* 1. teapot */}
+          <Pic src={TeapotSketch} label="sketsa teapot" x={68.4} y={202} w={145} h={160} />
+          <Pic src={Teapot} label="teapot trap" x={189} y={190} w={290} h={185} delay={0.1} />
 
-          {/* 2. Ichiban Sushi Matsuri */}
-          <Pic src={Ichiban} label="sketsa Ichiban" x={88.4} y={624} w={166.7} h={245} round={3} fit="contain" />
-          <Pic src={Ichiban2} label="Ichiban final" x={272} y={621} w={180.3} h={253.4} round={3} delay={0.1} />
-          <Cap y={891} w={366}>An illustration I made for the Ichiban Sushi Matsuri 2026 Fanart Competition, where I was selected as one of the finalists</Cap>
+          {/* 2. crystal */}
+          <Pic src={Crystal} label="crystal trap" x={67} y={360} w={272} h={200} />
+          <Pic src={CrystalSketch} label="sketsa crystal" x={322} y={377} w={140} h={165} delay={0.1} />
 
-          {/* 3. buku anak bilingual */}
-          <Pic src={Book1} label="halaman buku 1" x={122.4} y={1029} w={306} h={140} round={2} fit="contain" />
-          <Pic src={Book2} label="halaman buku 2" x={122.4} y={1182} w={306} h={143} round={2} fit="contain" delay={0.1} />
-          <Cap y={1360} w={323}>A bilingual children’s book illustration commission I worked on for a client.</Cap>
+          {/* 3. kamera */}
+          <Pic src={TrapSketch} label="sketsa kamera" x={70} y={560} w={142} h={140} />
+          <Pic src={Trap} label="trap kamera" x={225} y={560} w={234} h={145} delay={0.1} />
 
-          {/* 4. maskot KKP */}
-          <Pic src={TunaSiluet} label="siluet maskot" x={91.8} y={1507} w={136} h={129} round={0} fit="contain" />
-          <Pic src={TunoAll} label="character sheet" x={91.8} y={1670} w={136} h={136} round={0} fit="contain" delay={0.1} />
-          <Reveal delay={0.1} style={at(256.8, 1513, 157)}>
-            <p style={{ ...textBase, fontSize: `max(9px, ${u(8.8)})` }}>
-              A character mascot design I created for a competition held by Indonesia’s Ministry of Marine Affairs and Fisheries (KKP).
-            </p>
-          </Reveal>
-          <Pic src={Tuno1} label="poster maskot" x={256.8} y={1588} w={199} h={245} round={3} delay={0.1} />
-          <Reveal delay={0.1} style={at(97, 1820, 371)}>
-            <p style={{ ...textBase, fontSize: `max(9px, ${u(8.8)})` }}>
-              <span className="block">Inspired by the yellowfin tuna,</span>
-              <span className="block">the mascot represents</span>
-              <span className="block">fishermen’s spirit to grow and</span>
-              improve, in line with the theme “Nelayan Naik Kelas.” The sailor hat, vest, and fishing net reflect the fishermen’s identity and hard work. Blue represents the sea as a source of life, white symbolizes hope, and yellow represents optimism and prosperity.
-            </p>
-          </Reveal>
+          {/* 4. phoenix */}
+          <Pic src={Phoenix} label="phoenix trap" x={138} y={708} w={255} h={165} />
+          <Cap y={890} w={362}>I designed the trap assets for the Roblox game Wild Trap, following the themes: Content Creator, Blossom, Crystal, and Fallen Phoenix.</Cap>
 
-          {/* 5. Here Comes the Sun */}
-          <Pic src={Sun} label="Here Comes the Sun" x={127.5} y={2031} w={275.5} h={194} round={3} />
-          <Cap y={2252} w={289}>An illustration inspired by The Beatles’ song “Here Comes the Sun.”</Cap>
+          {/* 5. witch house */}
+          <Pic src={witchSketch} label="sketsa witch house" x={72} y={1050} w={183} h={165} />
+          <Pic src={witch} label="witch house" x={259} y={1042} w={193} h={175} delay={0.1} />
+          <Cap y={1244} w={348}>A witch house environment design featuring a cozy, magical setting with unique details and a whimsical atmosphere</Cap>
+
+          {/* 6. karakter */}
+          <Pic src={Char} label="karakter" x={75} y={1372} w={270} h={172} />
+          <Pic src={Doll} label="doll" x={334} y={1382} w={140} h={140} delay={0.1} />
+          <Cap y={1543} w={360}>Character designs for a short animation project. The first is a cheerful and active 8–10 year old girl with a tragic past, reflected in her slightly jagged shapes. The second is her beloved doll friend that she carries everywhere.</Cap>
 
           {/* ============ FOOTER ============ */}
-          <Reveal style={at(19, 2311, 498, 77)}>
+          <Reveal style={at(19, 1630, 498, 77)}>
             <div className="relative h-full w-full border border-slate-600/70" style={{ borderRadius: u(14), ...arial, color: C.teal }}>
               <Img src={Logo} label="logo blooamarine" round={0}
                 style={{ position: "absolute", left: u(25), top: u(10), width: u(110), height: u(40), objectFit: "contain", objectPosition: "center", transform: "scale(2.5)", transformOrigin: "center", pointerEvents: "none" }} />
