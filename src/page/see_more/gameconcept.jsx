@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import GameAssetMobile from "../mobile/mobilegameconcept.jsx";
+import { useIsMobile } from "../mobile/mobile.jsx";
 import Logo from "../../../public/images/logo.PNG";
 import Kerang from "../../../public/images/aksen/kerang.PNG";
 import Bintang from "../../../public/images/aksen/bintang.PNG";
 import Spirall from "../../../public/images/aksen/spirall.PNG";
+import Gallery from "../../page/box.jsx";
 
 import Char from "../../../public/images/gameasset/char.png";
 import CrystalSketch from "../../../public/images/gameasset/crystal-sketch.PNG";
@@ -60,7 +63,7 @@ const at = (x, y, w, h) => ({ position: "absolute", left: u(x), top: u(y), width
 // gambar dengan kotak tetap seperti di desain
 const Pic = ({ src, label, x, y, w, h, round = 0, fit = "contain", delay = 0 }) => (
   <Reveal delay={delay} style={at(x, y, w, h)}>
-    <Img src={src} label={label} round={u(round)} style={{ height: "100%", objectFit: fit }} />
+    <Img src={src} label={label} round={u(round)} className="bm-zoom" style={{ height: "100%", objectFit: fit }} />
   </Reveal>
 );
 
@@ -85,6 +88,7 @@ const DECO = [
 
 export default function GameAssetPage() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const onBack = () => navigate("/", { state: { scrollTo: "portfolio" } });
   const onNav = (id) => navigate("/", { state: { scrollTo: id } });
 
@@ -95,6 +99,9 @@ export default function GameAssetPage() {
     window.addEventListener("resize", setVw);
     return () => window.removeEventListener("resize", setVw);
   }, []);
+
+  // semua hook sudah dipanggil di atas, baru boleh return versi mobile
+  if (isMobile) return <GameAssetMobile navigate={navigate} />;
 
   return (
     <div className="overflow-x-clip bg-white"
@@ -123,7 +130,7 @@ export default function GameAssetPage() {
         </defs>
       </svg>
 
-      {/* ============ HEADER (sama dengan halaman utama, Portfolio aktif) ============ */}
+      {/* ============ HEADER ============ */}
       <header className="fixed inset-x-0 top-0" style={{ zIndex: 100, background: C.sky, "--u": "var(--hu)", height: u(75) }}>
         <div className="relative flex h-full items-center justify-between" style={{ padding: `0 ${u(26)}` }}>
           <Img src={Logo} label="logo blooamarine" round={0}
@@ -142,15 +149,15 @@ export default function GameAssetPage() {
       </header>
       <div style={{ height: "var(--hh)" }} />
 
-      {/* ============ ISI HALAMAN (tinggi total desain 1716) ============ */}
+      {/* ============ ISI HALAMAN ============ */}
+      <Gallery>
       <main className="relative" style={{ height: u(1732) }}>
-        {/* pagar selebar layar */}
         <Bar y={960} h={35} dir="left" />
         <Bar y={1314} h={35} dir="right" />
 
-        <div className="relative mx-auto" style={{ width: u(534), height: "100%" }}>
-          {/* tombol back */}
-          <button type="button"
+        {/* tombol back (fixed, ikut layar seperti header) */}
+        <button
+          type="button"
           onClick={onBack}
           className="flex items-center justify-center rounded-full bg-[#01B8DA]/50 text-white transition-colors duration-300 hover:bg-[#01B8DA]"
           style={{
@@ -160,16 +167,17 @@ export default function GameAssetPage() {
             pointerEvents: "auto",
             cursor: "pointer",
             top: `calc(var(--hh) + ${u(14)})`,
-            left: `calc((var(--vw, 100vw) - ${u(534)}) / 2 + ${u(-30)})`,
+            left: `max(${u(8)}, calc((var(--vw, 100vw) - ${u(534)}) / 2 + ${u(-30)})`,
             width: u(61),
             height: u(16),
             fontSize: u(8.5),
             gap: u(3),
-            }}
+          }}
         >
-            <span aria-hidden>←</span> Back
+          <span aria-hidden>←</span> Back
         </button>
 
+        <div className="relative mx-auto" style={{ width: u(534), height: "100%" }}>
           {/* judul */}
           <Reveal style={{ position: "absolute", left: 0, right: 0, top: u(60) }}>
             <h1 className="text-center" style={{ ...lilita, ...inner, color: C.cyan, fontSize: u(25.5), lineHeight: 1.2 }}>
@@ -229,6 +237,7 @@ export default function GameAssetPage() {
           </Reveal>
         </div>
       </main>
+      </Gallery>
     </div>
   );
 }

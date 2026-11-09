@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MerchMobile from "../mobile/mobilemerch.jsx";
+import { useIsMobile } from "../mobile/mobile.jsx";
 import Logo from "../../../public/images/logo.PNG";
 import Kerang from "../../../public/images/aksen/kerang.PNG";
 import Bintang from "../../../public/images/aksen/bintang.PNG";
 import Spirall from "../../../public/images/aksen/spirall.PNG";
+import Gallery from "../../page/box.jsx";
 
 import Topi from "../../../public/images/merch/BUCKET-HAT-WITH-BG.png";
 import PinCowo from "../../../public/images/merch/IMG_4704.PNG";
@@ -62,7 +65,7 @@ const at = (x, y, w, h) => ({ position: "absolute", left: u(x), top: u(y), width
 // gambar dengan kotak tetap seperti di desain
 const Pic = ({ src, label, x, y, w, h, round = 0, fit = "contain", delay = 0 }) => (
   <Reveal delay={delay} style={at(x, y, w, h)}>
-    <Img src={src} label={label} round={u(round)} style={{ height: "100%", objectFit: fit }} />
+    <Img src={src} label={label} round={u(round)} className="bm-zoom" style={{ height: "100%", objectFit: fit }} />
   </Reveal>
 );
 
@@ -87,6 +90,7 @@ const DECO = [
 
 export default function MerchandisePage() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const onBack = () => navigate("/", { state: { scrollTo: "portfolio" } });
   const onNav = (id) => navigate("/", { state: { scrollTo: id } });
 
@@ -97,6 +101,8 @@ export default function MerchandisePage() {
     window.addEventListener("resize", setVw);
     return () => window.removeEventListener("resize", setVw);
   }, []);
+  
+  if (isMobile) return <MerchMobile navigate={navigate} />;
 
   return (
     <div className="overflow-x-clip bg-white"
@@ -145,6 +151,7 @@ export default function MerchandisePage() {
       <div style={{ height: "var(--hh)" }} />
 
       {/* ============ ISI HALAMAN (tinggi total desain ~1808) ============ */}
+      <Gallery>
       <main className="relative" style={{ height: u(1830) }}>
         {/* pagar selebar layar */}
         <Bar y={1377} h={35} dir="left" />
@@ -161,7 +168,7 @@ export default function MerchandisePage() {
             pointerEvents: "auto",
             cursor: "pointer",
             top: `calc(var(--hh) + ${u(14)})`,
-            left: `calc((var(--vw, 100vw) - ${u(534)}) / 2 + ${u(-30)})`,
+            left: `max(${u(8)}, calc((var(--vw, 100vw) - ${u(534)}) / 2 + ${u(-30)})`,
             width: u(61),
             height: u(16),
             fontSize: u(8.5),
@@ -229,6 +236,7 @@ export default function MerchandisePage() {
           </Reveal>
         </div>
       </main>
+      </Gallery>
     </div>
   );
 }

@@ -11,7 +11,8 @@ import Merchandise from "../../public/images/porto/totebag.png";
 import Kerangbg from "../../public/images/aksen/kerang-bg.png";
 import Bintangbg from "../../public/images/aksen/bintang-bg.png";
 import Spiralbg from "../../public/images/aksen/spiral-bg.png";
-import MobileHome from "./mobilehome";
+import MobileHome from "./mobile/mobilehome";
+import { useIsMobile as useIsMobileShared } from "./mobile/mobile.jsx";
 
 /* ============================================================
    blooamarine portfolio — React + Tailwind
@@ -164,7 +165,7 @@ export default function App() {
   const [active, setActive] = useState("home");
   const navigate = useNavigate();
   const location = useLocation();
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobileShared();
 
   useEffect(() => {
     if (location.state?.scrollTo) {

@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import Bintang from "../../public/images/aksen/bintang.PNG";
-import Maskot from "../../public/images/bloo.png";
-import Profile from "../../public/images/hani.jpg";
-import Kerang from "../../public/images/aksen/kerang.PNG";
-import Logo from "../../public/images/logo.PNG";
-import Illustration from "../../public/images/porto/biggle.jpg";
-import Game from "../../public/images/porto/witch.png";
-import Merchandise from "../../public/images/porto/totebag.png";
-import Kerangbg from "../../public/images/aksen/kerang-bg.png";
-import Bintangbg from "../../public/images/aksen/bintang-bg.png";
-import Spiralbg from "../../public/images/aksen/spiral-bg.png";
+import Bintang from "../../../public/images/aksen/bintang.PNG";
+import Maskot from "../../../public/images/bloo.png";
+import Profile from "../../../public/images/hani.jpg";
+import Kerang from "../../../public/images/aksen/kerang.PNG";
+import Logo from "../../../public/images/logo.PNG";
+import Illustration from "../../../public/images/porto/biggle.jpg";
+import Game from "../../../public/images/porto/witch.png";
+import Merchandise from "../../../public/images/porto/totebag.png";
+import Kerangbg from "../../../public/images/aksen/kerang-bg.png";
+import Bintangbg from "../../../public/images/aksen/bintang-bg.png";
+import Spiralbg from "../../../public/images/aksen/spiral-bg.png";
 
 /* ============================================================
    Tampilan HP — desain lebar 356px.
@@ -222,7 +222,7 @@ export default function MobileHome({ navigate }) {
   const UNIT = "blooamarine" + "\u00A0".repeat(5);
 
   return (
-    <div className="overflow-x-clip bg-white" style={{ ...lilita, "--u": "calc(min(var(--vw, 100vw) / 356, 1.9px))" }}>
+    <div className="overflow-x-clip bg-white" style={{ ...lilita, "--u": "calc(min(var(--vw, 100vw) / 356, 2.5px))" }}>
       <style>{CSS}</style>
 
       <svg width="0" height="0" className="absolute" aria-hidden>
@@ -269,13 +269,16 @@ export default function MobileHome({ navigate }) {
             </button>
           </div>
 
-          <nav aria-hidden={!menu} className="absolute left-0 right-0"
-            style={{
-              top: u(52), background: C.panel, borderRadius: u(24), padding: `${u(6)} 0`,
-              transformOrigin: "top", transition: "opacity .25s, transform .25s",
-              opacity: menu ? 1 : 0, transform: menu ? "none" : `translateY(${u(-8)}) scale(.97)`,
-              pointerEvents: menu ? "auto" : "none",
-            }}>
+          <nav className="absolute left-0 right-0"
+          style={{
+            top: u(52), background: C.panel, borderRadius: u(24), padding: `${u(6)} 0`,
+            transformOrigin: "top",
+            transition: `opacity .25s, transform .25s, visibility 0s linear ${menu ? "0s" : ".25s"}`,
+            opacity: menu ? 1 : 0,
+            transform: menu ? "none" : `translateY(${u(-8)}) scale(.97)`,
+            visibility: menu ? "visible" : "hidden",
+            pointerEvents: menu ? "auto" : "none",
+          }}>
             {MENU.map(([id, label], i) => (
               <button key={id} tabIndex={menu ? 0 : -1} onClick={() => go(id)}
                 style={{ ...lilita, display: "block", width: "73%", margin: "0 auto", height: u(25), fontSize: u(14), textAlign: "center", color: C.teal,
@@ -318,7 +321,7 @@ export default function MobileHome({ navigate }) {
 
         <Wrap>
           <Reveal style={{ position: "absolute", left: 0, right: 0, top: u(124) }}>
-            <h2 className="text-center" style={{ ...lilita, ...inner, color: C.cyan, fontSize: u(23), lineHeight: 1.2 }}>ABOUT ME</h2>
+            <h2 className="text-center" startOffset="50%" style={{ ...lilita, ...inner, color: C.cyan, fontSize: u(23), lineHeight: 1.2 }}>ABOUT ME</h2>
           </Reveal>
 
           <Reveal delay={0.1} style={box(127, 165, 104, 104)}>
@@ -338,8 +341,8 @@ export default function MobileHome({ navigate }) {
 
       {/* PORTFOLIO */}
       <section id="portfolio" className="relative" style={{ height: u(844), marginTop: u(82), background: C.sky, scrollMarginTop: u(40) }}>
-        <svg aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 w-full"
-          style={{ height: u(60) }} viewBox="0 0 356 60" preserveAspectRatio="none">
+        <svg aria-hidden className="pointer-events-none absolute inset-x-0 w-full"
+        style={{ bottom: -1, height: `calc(${u(90)} + 1px)` }} viewBox="0 0 356 60" preserveAspectRatio="none">
           <path ref={w1Ref} fill="#fff" fillOpacity="0.55" d={waveBottomD(0, 10, 210, 1.2, 28, 1.5)} />
           <path ref={w2Ref} fill="#fff" d={waveBottomD(0, 12, 290, 1.6, 34)} />
         </svg>

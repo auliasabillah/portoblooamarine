@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import IllustrationMobile from "../mobile/mobileillustration.jsx";
+import { useIsMobile } from "../mobile/mobile.jsx";
 import Logo from "../../../public/images/logo.PNG";
 import Kerang from "../../../public/images/aksen/kerang.PNG";
 import Bintang from "../../../public/images/aksen/bintang.PNG";
 import Spirall from "../../../public/images/aksen/spirall.PNG";
+import Gallery from "../../page/box.jsx";
 
 import Biggle1 from "../../../public/images/illus/biggle-sketch.png";
 import Biggle2 from "../../../public/images/illus/biggle.jpg";
@@ -59,7 +62,7 @@ const at = (x, y, w, h) => ({ position: "absolute", left: u(x), top: u(y), width
 // gambar dengan kotak tetap seperti di desain
 const Pic = ({ src, label, x, y, w, h, round = 4, fit = "cover", delay = 0 }) => (
   <Reveal delay={delay} style={at(x, y, w, h)}>
-    <Img src={src} label={label} round={u(round)} style={{ height: "100%", objectFit: fit }} />
+    <Img src={src} label={label} round={u(round)} className="bm-zoom" style={{ height: "100%", objectFit: fit }} />
   </Reveal>
 );
 
@@ -84,6 +87,7 @@ const DECO = [
 
 export default function IllustrationPage() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const onBack = () => navigate("/", { state: { scrollTo: "portfolio" } });
   const onNav = (id) => navigate("/", { state: { scrollTo: id } });
 
@@ -94,6 +98,8 @@ export default function IllustrationPage() {
     window.addEventListener("resize", setVw);
     return () => window.removeEventListener("resize", setVw);
   }, []);
+
+  if (isMobile) return <IllustrationMobile navigate={navigate} />;
 
   return (
     <div className="overflow-x-clip bg-white"
@@ -142,6 +148,7 @@ export default function IllustrationPage() {
       <div style={{ height: "var(--hh)" }} />
 
       {/* ============ ISI HALAMAN (tinggi total desain 2420) ============ */}
+      <Gallery>
       <main className="relative" style={{ height: u(2550) }}>
         {/* pagar selebar layar */}
         <Bar y={545} h={36} dir="left" />
@@ -161,7 +168,7 @@ export default function IllustrationPage() {
             pointerEvents: "auto",
             cursor: "pointer",
             top: `calc(var(--hh) + ${u(14)})`,
-            left: `calc((var(--vw, 100vw) - ${u(534)}) / 2 + ${u(-30)})`,
+            left: `max(${u(8)}, calc((var(--vw, 100vw) - ${u(534)}) / 2 + ${u(-30)})`,
             width: u(61),
             height: u(16),
             fontSize: u(8.5),
@@ -239,6 +246,7 @@ export default function IllustrationPage() {
           </Reveal>
         </div>
       </main>
+      </Gallery>
     </div>
   );
 }
