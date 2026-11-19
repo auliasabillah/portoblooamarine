@@ -206,22 +206,6 @@ export default function App() {
     return () => window.removeEventListener("resize", setVw);
   }, []);
 
-  const mascotRef = useRef(null);
-  const morphRef = useRef(null);
-
-  useEffect(() => {
-    const el = mascotRef.current;
-    if (!el) return;
-
-    const ro = new ResizeObserver(() => {
-      const h = el.getBoundingClientRect().height;
-      morphRef.current?.setAttribute("radius", Math.max(1, (h * 3) / 185).toFixed(2));
-    });
-
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
   const waveRef = useRef(null);
   const textRef = useRef(null);
   const w1Ref = useRef(null);
@@ -285,12 +269,14 @@ export default function App() {
             <feMerge><feMergeNode in="SourceGraphic" /><feMergeNode in="sh" /></feMerge>
           </filter>
 
-          <filter id="mascotOutline" x="-8%" y="-8%" width="116%" height="116%">
-            <feComponentTransfer in="SourceGraphic" result="clean"><feFuncA type="linear" slope="10" intercept="-8" /></feComponentTransfer>
-            <feMorphology ref={morphRef} in="clean" operator="dilate" radius="3" result="d" />
-            <feGaussianBlur in="d" stdDeviation="0.5" result="db" />
-            <feFlood floodColor="#fff" result="w" />
-            <feComposite in="w" in2="db" operator="in" result="s" />
+          {/* stroke putih maskot — ubah radius untuk mengatur ketebalan (coba 1.5 / 2 / 3) */}
+          <filter id="mascotOutline" x="-30%" y="-30%" width="160%" height="160%">
+            <feComponentTransfer in="SourceGraphic" result="clean">
+              <feFuncA type="linear" slope="14" intercept="-12" />
+            </feComponentTransfer>
+            <feMorphology in="clean" operator="dilate" radius="6.5" result="d" />
+            <feFlood floodColor="#fff" />
+            <feComposite in2="d" operator="in" result="s" />
             <feMerge><feMergeNode in="s" /><feMergeNode in="clean" /></feMerge>
           </filter>
         </defs>
@@ -335,10 +321,16 @@ export default function App() {
           </svg>
 
           <Reveal delay={0.2} style={box(185, 22, 160, 185)}>
-            <div ref={mascotRef} style={{ width: "100%", height: "100%" }}>
-              <Img src={Maskot} label="maskot" fit="contain" round={0}
-                style={{ width: "100%", height: "100%", filter: "url(#mascotOutline)" }} />
-            </div>
+            <Img
+            src={Maskot}
+            label="maskot"
+            fit="contain"
+            round={0}
+            style={{
+              width: "100%",
+              height: "100%",
+              filter: "url(#mascotOutline)",
+            }}/>
           </Reveal>
 
           <Reveal delay={0.1} style={{ position: "absolute", left: 0, right: 0, top: u(208) }}>
@@ -447,7 +439,7 @@ export default function App() {
             </h2>
           </Reveal>
 
-          {[[205.5, IG, "Instagram", "https://www.instagram.com/blooamarine"], [238.5, TT, "TikTok", "https://www.tiktok.com/@blooamarine"], [271.5, XI, "X", "https://x.com/blooamarine"], [304.5, LI, "LinkedIn", "https://www.linkedin.com/in/blooamarine"]].map(([x, icon, n, link]) => (
+          {[[205.5, IG, "Instagram", "https://www.instagram.com/blooamarine"], [238.5, TT, "TikTok", "https://www.tiktok.com/@blooamarine"], [271.5, XI, "X", "https://x.com/blooamarine"], [304.5, LI, "LinkedIn", "https://www.linkedin.com/in/hanifa-khoirunnisa-948a23363/"]].map(([x, icon, n, link]) => (
             <Reveal key={n} style={box(x, 47, 24, 24)} delay={0.1}>
               <a href={link} target="_blank" rel="noreferrer" aria-label={n}
                 className="grid h-full w-full place-items-center transition hover:scale-110"

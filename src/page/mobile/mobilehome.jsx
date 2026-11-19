@@ -342,7 +342,7 @@ export default function MobileHome({ navigate }) {
       {/* PORTFOLIO */}
       <section id="portfolio" className="relative" style={{ height: u(844), marginTop: u(82), background: C.sky, scrollMarginTop: u(40) }}>
         <svg aria-hidden className="pointer-events-none absolute inset-x-0 w-full"
-        style={{ bottom: -1, height: `calc(${u(90)} + 1px)` }} viewBox="0 0 356 60" preserveAspectRatio="none">
+        style={{ bottom: -1, height: `calc(${u(60)} + 1px)` }} viewBox="0 0 356 60" preserveAspectRatio="none">
           <path ref={w1Ref} fill="#fff" fillOpacity="0.55" d={waveBottomD(0, 10, 210, 1.2, 28, 1.5)} />
           <path ref={w2Ref} fill="#fff" d={waveBottomD(0, 12, 290, 1.6, 34)} />
         </svg>

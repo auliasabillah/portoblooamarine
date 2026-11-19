@@ -202,7 +202,7 @@ export default function MerchandisePage() {
           <Pic src={Topi} label="mockup topi" x={277} y={685} w={188} h={126} delay={0.1} />
 
           {/* 4. totebag */}
-          <Pic src={LogoTotebag} label="ilustrasi totebag" x={92} y={858} w={150} h={155} />
+          <Pic src={LogoTotebag} label="ilustrasi totebag" x={92} y={842} w={150} h={198} />
           <Pic src={Totebag} label="mockup totebag" x={277} y={845} w={188} h={187} delay={0.1} />
 
           {/* 5. jam */}
@@ -213,7 +213,7 @@ export default function MerchandisePage() {
           {/* 6. pin */}
           <Pic src={PinCewe} label="pin karakter cewek" x={74} y={1457} w={100} h={100} />
           <Pic src={PinCowo} label="pin karakter cowok" x={156} y={1535} w={100} h={100} delay={0.1} />
-          <Pic src={Pin} label="mockup pin" x={289} y={1490} w={170} h={120} delay={0.1} />
+          <Pic src={Pin} label="mockup pin" x={285} y={1460} w={170} h={160} delay={0.1} />
           <Cap y={1664} w={290}>A pin design I created for the Designholic 13.0 exhibition merchandise.</Cap>
 
           {/* ============ FOOTER ============ */}

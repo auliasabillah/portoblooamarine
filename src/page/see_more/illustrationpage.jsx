@@ -149,7 +149,7 @@ export default function IllustrationPage() {
 
       {/* ============ ISI HALAMAN (tinggi total desain 2420) ============ */}
       <Gallery>
-      <main className="relative" style={{ height: u(2550) }}>
+      <main className="relative" style={{ height: u(2545) }}>
         {/* pagar selebar layar */}
         <Bar y={545} h={36} dir="left" />
         <Bar y={965} h={34} dir="right" />
